@@ -28,7 +28,8 @@
     return ('0', -1);
 }
 
-var sum = 0;
+var sum1 = 0;
+var sum2 = 0;
 foreach (var line in File.ReadAllLines(@"..\..\..\..\day-01.txt"))
 {
     //First digit
@@ -42,9 +43,12 @@ foreach (var line in File.ReadAllLines(@"..\..\..\..\day-01.txt"))
     var lastDigitIndex = line.LastIndexOf(lastDigit);
     var lastTextNumber = FindTextNumber(line, true);
     var last = lastTextNumber.number != '0' ? (lastTextNumber.index > lastDigitIndex ? lastTextNumber.number : lastDigit) : lastDigit;
-    sum += int.Parse(new string(new[] { first, last }));
+    
+    sum1 += int.Parse(new string(new[] { firstDigit, lastDigit }));
+    sum2 += int.Parse(new string(new[] { first, last }));
 }
 
 //Print result
-Console.WriteLine($"Calibration sum: {sum}");
+Console.WriteLine($"Part 1 - Calibration sum: {sum1}");
+Console.WriteLine($"Part 2 - Calibration sum: {sum2}");
 Console.ReadLine();

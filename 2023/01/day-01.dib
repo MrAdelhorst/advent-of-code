@@ -51,6 +51,8 @@ Both parts of this puzzle are complete! They provide two gold stars: **
 
 #!csharp
 
+using System.IO;
+
 bool IsDigit(char c) => c >= '0' && c <= '9';
 (char number, int index) FindTextNumber(string line, bool reverse = false)
 {
