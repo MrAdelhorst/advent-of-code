@@ -7,8 +7,8 @@ for (int gameNo = 0; gameNo < lines.Count(); gameNo++)
 {
     Regex regex = new Regex(@"(\d+)");
     var pairs = lines[gameNo].Split(": ").Last().Split(" | ");
-    var winning = regex.Matches(pairs.First()).Select(n => int.Parse(n.ToString()));
-    var mine = regex.Matches(pairs.Last()).Select(n => int.Parse(n.ToString()));
+    var winning = regex.Matches(pairs.First()).Select(n => int.Parse(n.Value));
+    var mine = regex.Matches(pairs.Last()).Select(n => int.Parse(n.Value));
     games.Add(gameNo, winning.Count(w => mine.Contains(w)));
 }
 
