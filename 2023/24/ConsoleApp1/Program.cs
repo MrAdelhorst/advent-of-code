@@ -19,7 +19,7 @@ for (int i=0; i< lines.Count() - 1; i++)
     }
 }
 
-//Part 2: 3 hail is enough to fix the trajectory of the rock
+//Part 2: 3 hail are enough to fix the trajectory of the rock
 var coordinates = hailList.Take(3).ToArray().CalculateSharedIntersection();
 
 Console.WriteLine($"Part 1 - intersecting lines: {intersections}");
