@@ -20,7 +20,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+    - name: Restore and build all projects
+      run: |
+        for project in $(find . -name '*.csproj'); do
+          echo "Restoring and building $project"
+          dotnet restore $project
+          dotnet build $project --no-restore
+        done
