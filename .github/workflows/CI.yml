@@ -15,11 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: csharp
+        build-mode: autobuild
+
     - name: Restore and build all projects
       run: |
         for project in $(find . -name '*.csproj'); do
@@ -27,3 +36,8 @@ jobs:
           dotnet restore $project
           dotnet build $project --no-restore
         done
+    
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: csharp
