@@ -27,7 +27,8 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: csharp
-        build-mode: autobuild
+        queries: security-and-quality
+        build-mode: manual
 
     - name: Restore and build all projects
       run: |
