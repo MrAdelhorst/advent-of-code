@@ -102,3 +102,60 @@ foreach (var line in File.ReadAllLines(@".\day-01.txt"))
 
 //Print result
 Console.WriteLine($"Calibration sum: {sum}");
+
+#!csharp
+
+// var tmp1 = 0160434;
+// var tmp2 = 0153304;
+// var current_iteration = 490;
+
+var tmp1 = 0167004;
+var tmp2 = 0159728;
+var current_iteration = 500;
+
+
+var target_iteration = 5000;
+
+var offset = tmp1;
+var iterations = (target_iteration - current_iteration) / 11;
+var delta = tmp1-tmp2;
+var delta_increase = 162;
+for (int i=0; i<iterations; i++)
+{
+    delta += delta_increase;
+    offset += delta;
+}
+
+Console.WriteLine($"Final frequency: {offset}");
+
+#!csharp
+
+// long tmp1 = 16332046;
+// long tmp2 = 15342878;
+long tmp1 = 16320994;
+long tmp2 = 15332166;
+
+
+long current_iteration = 4257;
+
+
+long target_iteration = 26501365;
+
+long offset = tmp1;
+long iterations = (target_iteration - current_iteration) / 131;
+long modCheck = (target_iteration - current_iteration) % 131;
+long delta = tmp1-tmp2;
+long delta_increase = 30898;
+for (int i=0; i<iterations; i++)
+{
+    delta += delta_increase;
+    offset += delta;
+}
+
+Console.WriteLine($"Final frequency:   {offset}");
+
+#!csharp
+
+Console.WriteLine((26501365 - 4257) % 131);
+
+Console.WriteLine(26501365 % 131);
