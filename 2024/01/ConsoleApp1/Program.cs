@@ -14,3 +14,4 @@ for (int i=0; i<list1.Count; i++)
 
 Console.WriteLine($"Part 1 - Sum: {sum}"); 
 Console.WriteLine($"Part 2 - Score: {similarityScore}");
+Console.ReadLine();

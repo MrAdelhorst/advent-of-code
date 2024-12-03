@@ -29,4 +29,5 @@ static bool Valid2(List<int> report)
 }
 
 Console.WriteLine($"Part 1 - Valid reports: {reports.Count(Valid)}");
-Console.WriteLine($"Part 2 - Valid reports: {reports.Count(Valid2)}"); 
+Console.WriteLine($"Part 2 - Valid reports: {reports.Count(Valid2)}");
+Console.ReadLine();
