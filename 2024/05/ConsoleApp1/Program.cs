@@ -21,8 +21,8 @@ var sortedUpdates = updates
     .Select(x => (update: x.ordered, equal: x.original.SequenceEqual(x.ordered)))
     .ToList();
 
-Console.WriteLine($"Part 1 - {sortedUpdates.Where(x => x.equal).Sum(x => x.update[x.update.Count / 2])}");
-Console.WriteLine($"Part 2 - {sortedUpdates.Where(x => !x.equal).Sum(x => x.update[x.update.Count / 2])}");
+Console.WriteLine($"Part 1 - Sum: {sortedUpdates.Where(x => x.equal).Sum(x => x.update[x.update.Count / 2])}");
+Console.WriteLine($"Part 2 - Sum: {sortedUpdates.Where(x => !x.equal).Sum(x => x.update[x.update.Count / 2])}");
 Console.ReadLine();
 
 internal class PageComparer(ImmutableHashSet<(int key, int value)> ordering) : IComparer<int>

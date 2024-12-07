@@ -20,8 +20,8 @@ for (int y = 0; y < map.Length; y++)
             infiniteLoops++;
     }
 
-Console.WriteLine($"Part 1 - {NavigateMap(start, map).map.CountSteps()}");
-Console.WriteLine($"Part 2 - {infiniteLoops}");
+Console.WriteLine($"Part 1 - Guard positions: {NavigateMap(start, map).map.CountSteps()}");
+Console.WriteLine($"Part 2 - Obstacle positions: {infiniteLoops}");
 Console.ReadLine();
 
 static (char[][] map, bool isInfiniteLoop) NavigateMap(Coordinate start, char[][] map)
