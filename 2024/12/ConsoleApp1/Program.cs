@@ -58,13 +58,10 @@ internal static class Extensions
             {
                 if (!borders.Contains(inner)) //Could have been added when processing one of the other inners
                 {
-                    var direction = region.Contains(inner.East()) 
-                        ? Direction.South 
-                        : region.Contains(inner.South())
-                            ? Direction.West
-                            : region.Contains(inner.West())
-                                ? Direction.North
-                                : Direction.East;
+                    //Keep turning until the crop on the left is on the outside (i.e. in the 'region')
+                    var direction = Direction.East;
+                    while (!region.Contains(inner.Left(direction)))
+                        direction = direction.TurnRight();
 
                     var (innerSides, innerBorders) = region.TraverseEdge(inner, direction, innerBorder: true);
                     sides += innerSides;
