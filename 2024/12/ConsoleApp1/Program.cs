@@ -82,16 +82,17 @@ internal static class Extensions
         var direction = startDirection;
         var position = startPosition;
         var sides = 0;
+        //Traverse clockwise until we're back at the start
         do
         {
             borders.Add(innerBorder ? position : position.Left(direction));
             var nextPosition = position.Next(direction);
-            if (region.Contains(nextPosition) == innerBorder)
+            if (region.Contains(nextPosition) == innerBorder) //When tracing an inner region, the 'region' is the outside
             {
                 direction = direction.TurnRight();
                 sides++;
             }
-            else if (region.Contains(nextPosition.Left(direction)) != innerBorder)
+            else if (region.Contains(nextPosition.Left(direction)) != innerBorder) //Turn left if the crop left of the next position belongs to the region we're tracing
             {
                 position = nextPosition.Left(direction);
                 direction = direction.TurnLeft();
