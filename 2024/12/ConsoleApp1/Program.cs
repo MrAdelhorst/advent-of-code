@@ -2,17 +2,17 @@
     .Select(row => row.ToArray())
     .ToArray();
 
-var regions = new List<(Coordinate[] region, char crop)>();
+var regions = new List<Coordinate[]>();
 for (int y = 0; y < map.Length; y++)
     for (int x = 0; x < map[y].Length; x++)
         if (map[y][x] != '.')
             regions.Add(FindRegion(map, new Coordinate(x, y)));
 
-Console.WriteLine($"Part 1 - Price: {regions.Sum(r => r.region.Perimeter() * r.region.Area())}");
-Console.WriteLine($"Part 2 - Price: {regions.Sum(r => r.region.Sides() * r.region.Area())}");
+Console.WriteLine($"Part 1 - Price: {regions.Sum(r => r.Perimeter() * r.Area())}");
+Console.WriteLine($"Part 2 - Price: {regions.Sum(r => r.Sides() * r.Area())}");
 Console.ReadLine();
 
-(Coordinate[] region, char crop) FindRegion(char[][] map, Coordinate position)
+Coordinate[] FindRegion(char[][] map, Coordinate position)
 {
     var crop = map[position.Y][position.X];
     var region = new List<Coordinate>();
@@ -29,7 +29,7 @@ Console.ReadLine();
         }
     }
 
-    return (region.ToArray(), crop);
+    return region.ToArray();
 }
 
 internal static class Extensions
