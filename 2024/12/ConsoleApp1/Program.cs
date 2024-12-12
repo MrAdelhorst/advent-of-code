@@ -79,29 +79,29 @@ internal static class Extensions
     private static (int sides, List<Coordinate> borders) TraverseEdge(this Coordinate[] region, Coordinate startPosition, Direction startDirection, bool innerBorder)
     {
         var borders = new List<Coordinate>();
-        var currentDirection = startDirection;
-        var currentPosition = startPosition;
+        var direction = startDirection;
+        var position = startPosition;
         var sides = 0;
         do
         {
-            borders.Add(innerBorder ? currentPosition : currentPosition.Left(currentDirection));
-            var nextPosition = currentPosition.Next(currentDirection);
+            borders.Add(innerBorder ? position : position.Left(direction));
+            var nextPosition = position.Next(direction);
             if (region.Contains(nextPosition) == innerBorder)
             {
-                currentDirection = currentDirection.TurnRight();
+                direction = direction.TurnRight();
                 sides++;
             }
-            else if (region.Contains(nextPosition.Left(currentDirection)) != innerBorder)
+            else if (region.Contains(nextPosition.Left(direction)) != innerBorder)
             {
-                currentPosition = nextPosition.Left(currentDirection);
-                currentDirection = currentDirection.TurnLeft();
+                position = nextPosition.Left(direction);
+                direction = direction.TurnLeft();
                 sides++;
             }
             else
             {
-                currentPosition = nextPosition;
+                position = nextPosition;
             }
-        } while (currentPosition != startPosition || currentDirection != startDirection);
+        } while (position != startPosition || direction != startDirection);
 
         return (sides, borders);
     }
