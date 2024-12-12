@@ -39,7 +39,7 @@ Console.ReadLine();
             goalsReached++;
         }
         else
-            foreach (var neighbor in coord.GetNeighbors()
+            foreach (var neighbor in coord.GetNeighbours()
                 .Where(x => x.IsValid(map, height + 1)))
                     jobs.Enqueue((neighbor, height + 1));
     }
@@ -52,7 +52,7 @@ record Coordinate(int X, int Y)
     public bool IsValid(int[][] map, int neededHeight) =>
         X >= 0 && Y >= 0 && Y < map.Length && X < map[Y].Length && map[Y][X] == neededHeight;
 
-    public IEnumerable<Coordinate> GetNeighbors()
+    public IEnumerable<Coordinate> GetNeighbours()
     {
         yield return new Coordinate(X - 1, Y);
         yield return new Coordinate(X + 1, Y);
