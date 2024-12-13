@@ -1,24 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 
-var test = new[]
-{
-"Button A: X+94, Y+34",
-"Button B: X+22, Y+67",
-"Prize: X=8400, Y=5400",
-"",
-"Button A: X+26, Y+66",
-"Button B: X+67, Y+21",
-"Prize: X=12748, Y=12176",
-"",
-"Button A: X+17, Y+86",
-"Button B: X+84, Y+37",
-"Prize: X=7870, Y=6450",
-"",
-"Button A: X+69, Y+23",
-"Button B: X+27, Y+71",
-"Prize: X=18641, Y=10279",
-};
-
 var lines = File.ReadAllLines(@"..\..\..\..\day-13.txt");
 var coordRegex = new Regex(@"X\+(\d+), Y\+(\d+)");
 var prizeRegex = new Regex(@"X=(\d+), Y=(\d+)");
@@ -29,53 +10,55 @@ int lineIndex = 0;
 while (lineIndex < lines.Length)
 {
     var buttonAText = coordRegex.Match(lines[lineIndex]);
-    var buttonA = new Coordinate(int.Parse(buttonAText.Groups[1].Value), int.Parse(buttonAText.Groups[2].Value));
     var buttonBText = coordRegex.Match(lines[lineIndex + 1]);
-    var buttonB = new Coordinate(int.Parse(buttonBText.Groups[1].Value), int.Parse(buttonBText.Groups[2].Value));
     var prizeText = prizeRegex.Match(lines[lineIndex + 2]);
-    var prize = new Coordinate(int.Parse(prizeText.Groups[1].Value), int.Parse(prizeText.Groups[2].Value));
-    machines.Add((buttonA, buttonB, prize));
+    machines.Add(
+        (new Coordinate(long.Parse(buttonAText.Groups[1].Value), long.Parse(buttonAText.Groups[2].Value)), 
+        new Coordinate(long.Parse(buttonBText.Groups[1].Value), long.Parse(buttonBText.Groups[2].Value)), 
+        new Coordinate(long.Parse(prizeText.Groups[1].Value), long.Parse(prizeText.Groups[2].Value))));
     lineIndex += 4;
 }
 
-var tokens = 0;
-foreach (var machine in machines)
-{
-    var (won, tokensUsed) = Calculate(machine.buttonA, machine.buttonB, machine.prize);
-    if (won)
-        tokens += tokensUsed;
-}
-
-Console.WriteLine($"Part 1 - {tokens}");
-Console.WriteLine($"Part 2 - ");
+Console.WriteLine($"Part 1 - Tokens spent: {Calculate(machines, false)}");
+Console.WriteLine($"Part 2 - Tokens spent: {Calculate(machines, true)}");
 Console.ReadLine();
 
-(bool won, int tokensUsed) Calculate(Coordinate buttonA, Coordinate buttonB, Coordinate prize)
+decimal Calculate(List<(Coordinate buttonA, Coordinate buttonB, Coordinate prize)> machines, bool part2)
 {
-    if (100 * (buttonA.X + buttonB.X) < prize.X || 100 * (buttonA.Y + buttonB.Y) < prize.Y)
-        return (false, 0);
+    var offset = part2 ? 10000000000000m : 0;
 
-    var bPresses = Math.Min(100, MaxNeeded(buttonB, prize));
-    var aPresses = MaxNeeded(buttonA, new Coordinate(prize.X - bPresses * buttonB.X, prize.Y - bPresses * buttonB.Y));
-
-    while (bPresses >= 0 
-        && (aPresses * buttonA.X + bPresses * buttonB.X != prize.X
-            || aPresses * buttonA.Y + bPresses * buttonB.Y != prize.Y))
+    return machines.Sum(m =>
     {
-        bPresses--;
-        aPresses = Math.Min(100, MaxNeeded(buttonA, new Coordinate(prize.X - bPresses * buttonB.X, prize.Y - bPresses * buttonB.Y)));
-    }
-
-    if(aPresses * buttonA.X + bPresses * buttonB.X == prize.X
-            && aPresses * buttonA.Y + bPresses * buttonB.Y == prize.Y)
-        return (true, aPresses * 3 + bPresses);
-    else
-        return (false, 0);
+        var line1 = new Line(0 - (decimal)m.buttonA.X / m.buttonB.X, (m.prize.X + offset) / m.buttonB.X);
+        var line2 = new Line(0 - (decimal)m.buttonA.Y / m.buttonB.Y, (m.prize.Y + offset) / m.buttonB.Y);
+        var intersection = line1.Intersection(line2);
+        return intersection != default && (part2 || intersection.InBounds()) 
+            ? intersection.X * 3 + intersection.Y 
+            : 0;
+    });
 }
 
-int MaxNeeded(Coordinate button, Coordinate deltaNeeded)
+public record Coordinate(long X, long Y)
 {
-    return Math.Min(deltaNeeded.X / button.X, deltaNeeded.Y / button.Y);
+    public bool InBounds() => X >= 0 && Y >= 0 && X <= 100 && Y <= 100;
 }
 
-record Coordinate(int X, int Y);
+public record Line(decimal Slope, decimal Intercept);
+
+public static class Extensions
+{
+    public static Coordinate Intersection(this Line line1, Line line2)
+    {
+        if (line1.Slope == line2.Slope)
+            return default;
+
+        var x = (line2.Intercept - line1.Intercept) / (line1.Slope - line2.Slope);
+        var y = line1.Slope * x + line1.Intercept;
+
+        //Must be an integer - discard rounding errors
+        if (Math.Abs(x - Math.Round(x)) >= 0.0000001m || Math.Abs(y - Math.Round(y)) >= 0.0000001m)
+            return default;
+
+        return new Coordinate((long)Math.Round(x), (long)Math.Round(y));
+    }
+}
