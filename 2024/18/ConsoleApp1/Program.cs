@@ -3,11 +3,10 @@
     .Select(line => new Coordinate(int.Parse(line[0]), int.Parse(line[1])))
     .ToArray();
 
-var gridDimensions = 71;
-var map = Enumerable.Range(0, gridDimensions)
+var map = Enumerable.Range(0, 71)
     .Select(x =>
     {
-        var tmp = new char[gridDimensions];
+        var tmp = new char[71];
         Array.Fill(tmp, '.');
         return tmp;
     }).ToArray();
