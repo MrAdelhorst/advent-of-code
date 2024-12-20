@@ -1,4 +1,22 @@
-﻿var lines = File.ReadAllLines(@"..\..\..\..\day-17.txt");
+﻿var test = new[]
+{
+"Register A: 729",
+"Register B: 0",
+"Register C: 0",
+"",
+"Program: 0,1,5,4,3,0",
+};
+
+var test2 = new[]
+{
+"Register A: 2024",
+"Register B: 0",
+"Register C: 0",
+"",
+"Program: 0,3,5,4,3,0",
+};
+
+var lines = File.ReadAllLines(@"..\..\..\..\day-17.txt");
 var originalRegisters = lines[0..3].Select(line => long.Parse(line.Split(": ")[1])).ToArray();
 var originalProgram = lines[^1].Split(": ")[1].Split(',').Select(int.Parse).ToArray();
 

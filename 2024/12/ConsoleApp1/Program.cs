@@ -1,4 +1,54 @@
-﻿var map = File.ReadAllLines(@"..\..\..\..\day-12.txt")
+﻿var test00 = new[] //Part2 = 164
+{
+"OOOOO".ToArray(),
+"OXXYO".ToArray(),
+"OXXYO".ToArray(),
+"OXXYO".ToArray(),
+"OOOOO".ToArray(),
+};
+
+var test0 = new[] //Part2 = 196
+{
+"OOOOO".ToArray(),
+"OXXXO".ToArray(),
+"OXOXO".ToArray(),
+"OXXXO".ToArray(),
+"OOOOO".ToArray(),
+};
+
+var test1 = new[]
+{
+"OOOOO".ToArray(),
+"OXOXO".ToArray(),
+"OOOOO".ToArray(),
+"OXOXO".ToArray(),
+"OOOOO".ToArray(),
+};
+
+var test2 = new[]
+{
+"RRRRIICCFF".ToArray(),
+"RRRRIICCCF".ToArray(),
+"VVRRRCCFFF".ToArray(),
+"VVRCCCJFFF".ToArray(),
+"VVVVCJJCFE".ToArray(),
+"VVIVCCJJEE".ToArray(),
+"VVIIICJJEE".ToArray(),
+"MIIIIIJJEE".ToArray(),
+"MIIISIJEEE".ToArray(),
+"MMMISSJEEE".ToArray(),
+};
+
+var test3 = new[]
+{
+"EEEEE".ToArray(),
+"EXXXX".ToArray(),
+"EEEEE".ToArray(),
+"EXXXX".ToArray(),
+"EEEEE".ToArray(),
+};
+
+var map = File.ReadAllLines(@"..\..\..\..\day-12.txt")
     .Select(row => row.ToArray())
     .ToArray();
 

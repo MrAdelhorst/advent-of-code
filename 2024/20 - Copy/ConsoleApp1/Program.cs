@@ -43,7 +43,7 @@ while (jobs.Count > 0)
 
         foreach (var candidate in current.Neighbours().Where(map.Valid))
             jobs.Enqueue(
-                element: (pos: candidate, path: new List<Coordinate>(path) { candidate }, steps: steps + 1),
+                element: (pos: candidate, path: new List<Coordinate>(path){ candidate }, steps: steps + 1), 
                 priority: steps + 1 + candidate.Distance(goal));
     }
 }
@@ -64,7 +64,7 @@ int CountCheats(Coordinate[] path, int cheatMaxDuration)
 }
 
 record Coordinate(int X, int Y)
-{
+{     
     public IEnumerable<Coordinate> Neighbours()
     {
         yield return new Coordinate(X - 1, Y);
