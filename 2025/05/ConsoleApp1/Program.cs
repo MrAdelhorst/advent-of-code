@@ -25,18 +25,12 @@ internal static class Extensions
         return combined;
     }
 
-    internal static bool Intersect(this Range range1, Range range2)
-    {
-        return range1.from.Within(range2) || range1.to.Within(range2) || range2.from.Within(range1) || range2.to.Within(range1);
-    }
+    internal static bool Intersect(this Range range1, Range range2) =>
+        range1.from.Within(range2) || range1.to.Within(range2) || range2.from.Within(range1) || range2.to.Within(range1);
 
-    internal static bool Within(this long value, Range range)
-    {
-        return value >= range.from && value <= range.to;
-    }
+    internal static bool Within(this long value, Range range) => 
+        value >= range.from && value <= range.to;
 
-    internal static Range Merge(this IEnumerable<Range> source)
-    {
-        return (source.Min(x => x.from), source.Max(x => x.to));
-    }
+    internal static Range Merge(this IEnumerable<Range> source) =>
+        (source.Min(x => x.from), source.Max(x => x.to));
 }
